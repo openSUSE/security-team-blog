@@ -1,0 +1,31 @@
+---
+---
+
+// Overwrite assets/main.css
+$brand-color:      #30ba78;
+
+.site-title::before {
+	content: url("/assets/images/suse-white-logo-green.svg");
+	display: inline-block;
+	position: relative;
+	width: 35px;
+	top: 5px;
+}
+
+.site-header {
+	background-color: #0c322c;
+}
+
+$base-font-family: "Poppins Medium", Poppins, Arial, sans-serif;
+
+// Import partials from the `minima` theme.
+@import "minima";
+
+// Overwrite settings from _sass/minima/
+.site-title, .site-title:visited {
+	color: #efefef;
+}
+
+.site-nav .page-link {
+	color: #efefef;
+}
