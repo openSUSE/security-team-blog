@@ -1,6 +1,6 @@
 ---
 layout: post
-author: <a href="mailto:matthias.gerstner@suse.de">Matthias Gerstner</a>
+author: <a href='mailto:matthias.gerstner@suse.de'>Matthias Gerstner</a>
 title:  "File Descriptor Hijack vulnerability in open-vm-tools (CVE-2023-34059)"
 date:   2023-10-27 11:12:07 +0100
 tags:   CVE
