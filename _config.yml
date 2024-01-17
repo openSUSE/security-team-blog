@@ -28,6 +28,8 @@ url: "https://security.opensuse.org" # the base hostname & protocol for your sit
 # twitter_username: jekyllrb
 # github_username:  jekyll
 
+show_excerpts: true
+
 # Build settings
 theme: minima
 plugins:

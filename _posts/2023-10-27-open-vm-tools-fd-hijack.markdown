@@ -4,6 +4,7 @@ author: <a href='mailto:matthias.gerstner@suse.de'>Matthias Gerstner</a>
 title:  "File Descriptor Hijack vulnerability in open-vm-tools (CVE-2023-34059)"
 date:   2023-10-27 11:12:07 +0100
 tags:   CVE
+excerpt: "During a routine review of the setuid-root binary vmware-user-suid-wrapper from the open-vm-tools repository, a security vulnerability was found. CVE-2023-34059 identifies the capability to hijack file descriptor in open-vm-tools."
 ---
 
 Introduction
@@ -54,15 +55,15 @@ process's dumpable attribute:
     Normally, the "dumpable" attribute is set to 1. However, it is reset to
     the current value contained in the file /proc/sys/fs/suid_dumpable (which by
     default has the value 0), in the following circumstances:
-    
+
     [...]
-    
+
     - The process executes (execve(2)) a set-user-ID or set-group-ID program,
       resulting in a change of either the effective user ID or the effective
       group ID.
-    
+
     [...]
-    
+
     Processes that are not dumpable can not be attached via ptrace(2)
     PTRACE_ATTACH; see ptrace(2) for further details.
 
@@ -76,7 +77,7 @@ as is also documented in the `execve(2)` man page:
 
     The following Linux-specific process attributes are also not preserved
     during an execve():
-    
+
     - The process's "dumpable" attribute is set to the value 1, unless a
       set-user-ID program, a set-group-ID program, or a program with
       capabilities is being executed, [...].
@@ -177,7 +178,7 @@ available:
 
     user$ gcc -O2 vmware-race-fd.c -ovmware-race-fd
     user$ gcc -O2 uinput-inject.c -ouinput-inject
-    
+
     user$ ./vmware-race-fd
     vmware-user: could not open /proc/fs/vmblock/dev
     vmware-user: could not open /proc/fs/vmblock/dev
@@ -185,10 +186,10 @@ available:
     /usr/bin/vmtoolsd running at 12226
     Found fd 3 for /dev/uinput in /usr/bin/vmtoolsd
     Executing sub shell which will inherit the snatched file descriptor 4 (check /proc/self/fd)
-    
+
     user$ ls -l /proc/self/fd/4
     l-wx------ 1 user group 64 Jul 25 13:43 /proc/self/fd/4 -> /dev/uinput
-    
+
     user$ ./uinput-inject 4
     Sleeping 3 seconds for input subsystem to settle
     completed one iteration
