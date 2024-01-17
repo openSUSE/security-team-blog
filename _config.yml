@@ -53,6 +53,7 @@ exclude:
   - Gemfile
   - Gemfile.lock
   - run-podman
+  - README.md
 #   - node_modules/
 #   - vendor/bundle/
 #   - vendor/cache/
