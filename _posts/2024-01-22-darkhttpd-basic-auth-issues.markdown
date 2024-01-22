@@ -13,7 +13,7 @@ implemented in the C programming language, for serving static files. The
 version under review was [1.14][darkhttpd-reviewed-version].
 
 A [version 1.15 bugfix release][darkhttpd-fixed-version] containing a bugfix
-and an additional warning message are available. I requested CVEs from Mitre
+and an additional warning message is available. I requested CVEs from Mitre
 for the two issues found during this review. They have not been assigned yet,
 though. I will give an update once I know them.
 
@@ -25,7 +25,7 @@ basic authentication string supplied by a client is compared against the
 secret configured via the `--auth` command line parameter. For this comparison
 a regular `strcmp()` function call is used.
 
-Since `strcmp()` performs an efficient linear comparison it will terminate
+Since `strcmp()` performs an efficient linear comparison, it will terminate
 earlier if the first bytes of the supplied authentication string don't match
 compared to if they do match. This difference in runtime can be used for
 timing attacks to try and find out the correct authentication credentials to
@@ -58,13 +58,13 @@ Local Leak of Authentication Parameter in Process List
 The only way to configure the HTTP basic auth string in darkhttpd is to pass
 it via the `--auth` command line parameter. On Linux all local users can view
 the parameters of other programs running on the system. This means if there
-are other users or programs running in different security domains then these
+are other users or programs running in different security domains, then these
 can obtain the authentication credentials for the web server.
 
 To fix this an alternative mechanism needs to be provided to pass the
 authentication credentials in a safe way. Typically this can be solved by
 using an environment variable or a protected configuration file. If the
-existing `--auth` command line switch is kept around then the fact that this
+existing `--auth` command line switch is kept around, then the fact that this
 leaks the authentication credentials on Linux systems should be documented.
 
 Bugfix
@@ -77,10 +77,10 @@ line usage output.
 Review Summary
 ==============
 
-Apart from these HTTP basic authentication related issues I have not found
+Apart from these HTTP basic authentication related issues, I have not found
 any problematic spots in the code base of darkhttpd. I focused on the
 potential for log file spoofing, escaping the web root via crafted URLs and
-memory corruption e.g. through specifying bad byte ranges in HTTP headers.
+memory corruption, e.g. through specifying bad byte ranges in HTTP headers.
 The code is robust in these areas.
 
 Timeline
