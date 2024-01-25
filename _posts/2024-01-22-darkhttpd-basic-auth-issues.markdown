@@ -13,12 +13,10 @@ implemented in the C programming language, for serving static files. The
 version under review was [1.14][darkhttpd-reviewed-version].
 
 A [version 1.15 bugfix release][darkhttpd-fixed-version] containing a bugfix
-and an additional warning message is available. I requested CVEs from Mitre
-for the two issues found during this review. They have not been assigned yet,
-though. I will give an update once I know them.
+and an additional warning message is available.
 
-Basic Auth Timing Attack
-========================
+Basic Auth Timing Attack (CVE-2024-23771)
+=========================================
 
 The issue is found in [darkhttpd.c line 2272][timing-src-loc]. Here the HTTP
 basic authentication string supplied by a client is compared against the
@@ -52,8 +50,8 @@ to implement a [custom constant-time string comparison
 algorithm][constant-time-change] to address the issue. This algorithm is a
 rather simple xor operation over the complete range of bytes.
 
-Local Leak of Authentication Parameter in Process List
-======================================================
+Local Leak of Authentication Parameter in Process List (CVE-2024-23770)
+=======================================================================
 
 The only way to configure the HTTP basic auth string in darkhttpd is to pass
 it via the `--auth` command line parameter. On Linux all local users can view
@@ -88,7 +86,9 @@ Timeline
 
 | 2024-01-12 | I reported the findings to the upstream author <emikulic@gmail.com>, offering coordinated disclosure. |
 | 2024-01-13 | The author confirmed the security issues but declined a formal embargo period. |
+| 2024-01-15 | I requested two CVEs from Mitre to track the two findings found during the review. |
 | 2024-01-18 | After some discussions about the bugfixes, the author published the new version 1.15 containing the changes. |
+| 2024-01-25 | Mitre assigned the CVEs. |
 
 References
 ==========
