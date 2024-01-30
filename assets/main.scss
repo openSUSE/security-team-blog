@@ -37,3 +37,13 @@ $base-font-family: "Poppins Medium", Poppins, Arial, sans-serif;
 .site-nav {
 	background: #0c322c;
 }
+
+// fix h1 heading: https://github.com/jekyll/minima/pull/273/files
+.post-content h1 {
+	@include relative-font-size(2.625);
+	letter-spacing: -1px;
+	line-height: 1;
+	@include media-query($on-laptop) {
+		@include relative-font-size(2.25);
+	}
+}
