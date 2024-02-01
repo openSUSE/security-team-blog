@@ -11,6 +11,7 @@ Jekyll will reload itself on the fly whenever you make changes.
 - Install jekyll:
   ```
   sudo zypper in ruby ruby-devel
+  sudo zypper in -t pattern devel_C_C++
   bundle config set path 'vendor/bundle'
   bundle install
   ```
