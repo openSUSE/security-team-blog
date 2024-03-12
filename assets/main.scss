@@ -57,6 +57,15 @@ $base-font-family: "Poppins Medium", Poppins, Arial, sans-serif;
 	}
 }
 
+.post-content h3 {
+	@include relative-font-size(1.200);
+	letter-spacing: -1px;
+	line-height: 1;
+	@include media-query($on-laptop) {
+		@include relative-font-size(1.05);
+	}
+}
+
 // fix title line height
 .post-title {
 	line-height: $base-line-height * $base-font-size * 2.25;
