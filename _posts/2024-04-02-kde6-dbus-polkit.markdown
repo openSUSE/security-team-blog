@@ -1,6 +1,6 @@
 ---
 layout: post
-author: <a href='mailto:matthias.gerstner@suse.de'>Matthias Gerstner</a>
+author: <a href='mailto:matthias.gerstner@suse.de'>Matthias Gerstner</a>, <a href='mailto:filippo.bonazzi@suse.com'>Filippo Bonazzi</a> (proofread)
 title:  "KDE6 release: D-Bus and Polkit Galore"
 date:   2024-04-02
 tags:   KDE local D-Bus Polkit
@@ -269,7 +269,7 @@ root privileges:
   group gid to arbitrary new locations.
 - toggle: this takes raw XML that also seems to specify font paths that are
   to be enabled or disabled.
-- removeFile: does what is says on the label; another way for remove files.
+- removeFile: does what is says on the label; another way to remove files.
 - configure: saves modified font directories and invokes a small bash script
   `fontinst_x11` that prepares font directories and triggers a font refresh at
   the X server.
@@ -357,14 +357,24 @@ The take home lessons for developers implementing Polkit should be:
 Problematic File System Operations in sddm-kcm6
 ===============================================
 
-This component is a KDE Configuration Module (KCM) for the sddm display
+This component is a KDE Configuration Module (KCM) for the SDDM display
 manager. It contains a D-Bus service "org.kde.kcontrol.kcmsddm.conf". We
-reviewed it already it the past and [did so again][kcmsddm-review] for the
+reviewed it already in the past and [did so again][kcmsddm-review] for the
 KDE6 release. The service has two major problems, discussed in the following
 sections.
 
-Unsafe operations on file system paths provided by the unprivileged D-Bus client
+Unsafe Operations on File System Paths Provided by the Unprivileged D-Bus Client
 --------------------------------------------------------------------------------
+
+Multiple of the D-Bus methods provided by the sddm-kcm6 KAuth helper expect
+file system paths as input parameters. Such passing of paths to privileged
+D-Bus services is another problematic pattern that is often encountered. In
+the [`openConfig()`][sddm-open-config] function, the provided path to a [SDDM
+theme configuration file][sddm-path-as-arg] will be created by the helper, if
+necessary.  If it already exists, then a `chmod()` of the path to mode `0600`
+is performed, which is also following symlinks. To see how this can be
+problematic, consider what happens if "/etc/shadow" is passed as theme
+configuration path.
 
 Operating as `root`, on files that are under control of an unprivileged user, is
 notoriously hard to get right, and requires careful use of lower level system
@@ -561,6 +571,11 @@ References
 - [Polkit Manual][polkit-manual]
 - [KDE KAuth Framework Documentation][kauth-home]
 
+Change History
+==============
+
+|2024-04-05|Minor spelling fixes; inserted an introductory paragraph to [Unsafe Operations in sddm-kcm6](#unsafe-operations-on-file-system-paths-provided-by-the-unprivileged-d-bus-client).|
+
 [dbus-home]: https://www.freedesktop.org/wiki/Software/dbus/
 [drkonqi-dbus-impl]: https://invent.kde.org/plasma/drkonqi/-/blob/Plasma/6.0/src/coredump/polkit/main.cpp?ref_type=heads#L34
 [drkonqi-discussion]: https://bugzilla.suse.com/show_bug.cgi?id=1220190#c6
@@ -584,3 +599,5 @@ References
 [polkit-manual]: https://www.freedesktop.org/software/polkit/docs/latest/polkit.8.html
 [ratbag-dbus-config]: https://github.com/libratbag/libratbag/blob/v0.17/ratbagd/org.freedesktop.ratbag1.conf
 [systemd-coredump-cve]: https://www.openwall.com/lists/oss-security/2022/12/21/3
+[sddm-path-as-arg]: https://invent.kde.org/plasma/sddm-kcm/-/blob/Plasma/6.0/sddmauthhelper.cpp?ref_type=heads#L280
+[sddm-open-config]: https://invent.kde.org/plasma/sddm-kcm/-/blob/Plasma/6.0/sddmauthhelper.cpp?ref_type=heads#L30
