@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 set -eu pipefail
 thisdir="$(dirname "$(readlink -f "$0")")"
+podman pull "registry.opensuse.org/opensuse/leap:15.5"
 podman build -t security-team-blog -f "${thisdir}/Dockerfile"
 podman run -it -p 4000:4000 -v "${thisdir}:/work:Z" localhost/security-team-blog 
