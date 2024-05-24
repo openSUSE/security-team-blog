@@ -70,3 +70,7 @@ $base-font-family: "Poppins Medium", Poppins, Arial, sans-serif;
 .post-title {
 	line-height: $base-line-height * $base-font-size * 2.25;
 }
+
+.post-list h3 {
+    margin-bottom: 0px;
+}
