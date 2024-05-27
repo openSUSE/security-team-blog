@@ -21,8 +21,7 @@
 title: SUSE Security Team Blog
 email: security@suse.de
 description: >- # this means to ignore newlines until "baseurl:"
-  SUSE Security Team Blog. Open Source vulnerability reports and code review
-  results.
+   Source vulnerability reports and code review results.
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "https://security.opensuse.org"
 # twitter_username: jekyllrb
