@@ -74,3 +74,23 @@ $base-font-family: "Poppins Medium", Poppins, Arial, sans-serif;
 .post-list h3 {
     margin-bottom: 0px;
 }
+
+.tag {
+	margin: 0 2px;
+	padding: 4px 10px;
+	color: #fff;
+	font-size: 80%;
+	// font-family: sans-serif;
+	text-decoration: none;
+	text-transform: uppercase;
+}
+
+.tag_persimmon {
+	background: #FE7C3F;
+}
+.tag_mint {
+	background: #90EBCD;
+}
+.tag_jungle {
+    background: #30BA78;
+}
