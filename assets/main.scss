@@ -16,7 +16,11 @@ $brand-color:      #30ba78;
 	background-color: #0c322c;
 }
 
-$base-font-family: "Poppins Medium", Poppins, Arial, sans-serif;
+$base-font-family: "Poppins Regular", Poppins, Arial, sans-serif;
+
+h1{
+    font-weight: bold !important;
+}
 
 // Import partials from the `minima` theme.
 @import "minima";
