@@ -18,3 +18,4 @@ more detailed information about us and what we do here:
 
 - [SUSE Security Team page on the openSUSE Wiki](https://en.opensuse.org/openSUSE:Security_team)
 - [SUSE Security Team page on the SUSE website](https://www.suse.com/support/security/)
+- [openSUSE Security Disclosure policy](https://en.opensuse.org/openSUSE:Security_disclosure_policy)
