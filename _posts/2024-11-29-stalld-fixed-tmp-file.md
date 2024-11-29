@@ -21,7 +21,7 @@ Table of Contents
 
 Stalld is a daemon that aims to prevent starvation of operating system threads
 on Linux. It has recently been added to openSUSE Tumbleweed and we performed a
-routine review the contained systemd service. During the review we noticed a
+routine review of the contained systemd service. During the review we noticed a
 couple of security issues that should be addressed.
 
 We reached out to upstream via their GitLab issue tracker and created [a
@@ -170,7 +170,7 @@ file usage issue 2) likely is worthy of a CVE assignment, though.
 =============
 
 - [stalld GitLab project][stalld-gitlab]
-- [GitLab issue regarding weird DAEMON}\_MASK][daemon-mask-issue]
+- [GitLab issue regarding weird DAEMON\_UMASK][daemon-mask-issue]
 - [(Private) GitLab issue regarding fixed tempfile use][tempfile-issue]
 
 [stalld-gitlab]: https://gitlab.com/rt-linux-tools/stalld
