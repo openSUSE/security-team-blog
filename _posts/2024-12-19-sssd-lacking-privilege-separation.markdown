@@ -329,9 +329,9 @@ taken:
 
 The last item will likely be the most difficult to realize for the programs in
 question - especially in the `krb5_child` helper we expect more attack surface
-to exist, for example in the handling of the `ccache` and `keytab` files,
-which are dealt with in various other code paths via krb5 library routines,
-which are unaware of the untrusted input. We suggested upstream to carefully
+to exist, for example in the handling of the `ccache` and `keytab` files.
+These are dealt with in various other code paths via krb5 library routines
+that are unaware of the untrusted input. We suggested upstream to carefully
 think through all the possible inputs and code paths and to tighten them.
 
 We would furthermore strip down the supported command line switches, or limit
