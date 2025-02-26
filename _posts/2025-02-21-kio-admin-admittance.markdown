@@ -1,7 +1,7 @@
 ---
 layout: post
 author: <a href='mailto:matthias.gerstner@suse.de'>Matthias Gerstner</a>
-title:  "KDE: admittance of kio-admin into openSUSE"
+title:  "KDE: Admittance of kio-admin into openSUSE"
 date:   2025-02-21
 tags:   KDE Polkit
 excerpt: "kio-admin is a KDE component which allows to perform
@@ -270,7 +270,7 @@ kio-admin back end, however. When Dolphin sees a regular file for example, and
 triggers a request at kio-admin to operate on it, the path could be replaced
 by some other file type by the time the KIO framework starts operating on it.
 
-5) Assessment of Security Concerns
+3) Assessment of Security Concerns
 ==================================
 
 The concerns we have about privileged file operations exposed via D-Bus APIs
@@ -292,7 +292,7 @@ tasks, could increase the dangers we already identified.
 For these reasons we rejected the inclusion of the kio-admin API into openSUSE
 up until now.
 
-6) Rationale for Accepting kio-admin into openSUSE
+4) Rationale for Accepting kio-admin into openSUSE
 ==================================================
 
 We have dealt with these types of APIs in KDE since 2017 without achieving any
@@ -324,7 +324,7 @@ our concerns in the future, meanwhile we still recommend end users to be
 careful when using these features and take heed of the recommendations we give
 in the next section.
 
-7) Recommendations for Users of kio-admin or gvfs
+5) Recommendations for Users of kio-admin or gvfs
 =================================================
 
 Unfortunately there are many pitfalls when performing privileged file
@@ -359,7 +359,7 @@ to assume their identity, for example by invoking `sudo -u <user> -g <group>
 /bin/bash`. This way no elevated privileges that could be abused by a
 compromised account are present in the first place.
 
-8) Next Steps for Inclusion of kio-admin
+6) Next Steps for Inclusion of kio-admin
 ========================================
 
 Documenting our concerns in this blog post is the first step of the process to
@@ -369,7 +369,7 @@ document this in the openSUSE wiki.  When all of this is done we will perform
 the necessary steps to allow kio-admin into openSUSE Tumbleweed, which we
 believe will happen within the next two weeks.
 
-8) References
+7) References
 =============
 
 - [kio-admin Git Repository][upstream:kio-admin-git]
