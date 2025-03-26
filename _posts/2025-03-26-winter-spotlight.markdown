@@ -32,6 +32,7 @@ the winter:
 - [authentication bypass in pam\_pkcs11][blog:pam-pkcs11]
 - [admittance of kio-admin into openSUSE][blog:kde-admin]
 - [problematic log directory permissions in Below][blog:below]
+- [file existence test in nvidia-modprobe][blog:nvidia-modprobe]
 
 As usual in the spotlight series, in this post we want to give an insight into
 some of our work beyond these reports: reviews that did not lead to significant
@@ -231,6 +232,7 @@ to be available in about three months from now.
 [blog:sssd-privsep]: /2024/12/19/sssd-lacking-privilege-separation.html
 [blog:tuned]: /2024/11/26/tuned-instance-create.html
 [blog:below]: /2025/03/12/below-world-writable-log-dir.html
+[blog:nvidia-modprobe]: /2025/03/26/nvidia-modprobe.html
 [bugzilla:fwupd]: https://bugzilla.suse.com/show_bug.cgi?id=1235659
 [bugzilla:synce4l]: https://bugzilla.suse.com/show_bug.cgi?id=1222237
 [bugzilla:tuned]: https://bugzilla.suse.com/show_bug.cgi?id=1236029
