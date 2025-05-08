@@ -531,6 +531,12 @@ Review Bugs
 - [deepin-system-monitor D-Bus additions review bug][bugzilla:deepin-system-monitor-dbus-addition] (bsc#1229918)
 - [deepin-system-monitor Polkit additions review bug][bugzilla:deepin-system-monitor-polkit-addition] (bsc#1233054)
 
+Change History
+==============
+
+|2025-05-08|Minor clarifications in [Section 3) 2019-05-05: deepin-file-manager](#2019-05-05-deepin-file-manager-d-bus-service-and-polkit-actions) and [Section 3) 2023-05-13: deepin-app-services](#2023-05-13-deepin-app-services-dde-dconfig-daemon-d-bus-service). Fixed a typo in [Section 5)](#5-how-to-continue-using-deepin-on-opensuse).|
+
+
 [deepin:website]: https://www.deepin.org/en/dde/
 [opensuse:security-guidelines]: https://en.opensuse.org/openSUSE:Package_security_guidelines#Audit_Bugs_for_the_Security_Team
 [opensuse:build-service]: https://build.opensuse.org
