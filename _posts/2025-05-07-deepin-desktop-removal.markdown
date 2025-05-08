@@ -175,8 +175,8 @@ package. This application is a file manager similar to Dolphin in KDE or
 Nautilus in GNOME. The D-Bus service implemented in the package offers methods
 to perform actions like mounting Samba network shares or managing the UNIX
 group membership for user accounts in the system. This is one of the packages
-for which the Deepin packager implemented a whitelisting bypass, as was
-previously explained in [section 2)][section2].
+for which the Deepin packager eventually implemented a whitelisting bypass, as
+explained in [section 2)][section2].
 
 After reviewing the main D-Bus service, we could not help ourselves but call
 it [a security nightmare][bugzilla:deepin-file-manager-nightmare]. The
@@ -323,11 +323,11 @@ arbitrary locations. We were not completely sure about the impact of this,
 given the abstract nature of the configuration store, but it seemed to have
 security relevance, since upstream reacted to our report of the issue.
 
-It took three passes and a year of time, however, to fix all combinations of
-input parameters that would allow construction of arbitrary paths. Upstream
-did not verify and solve these on their own. Instead they fixed the concrete
-issues we reported and, when we returned to the review, we found yet another
-way to escape the `/usr` path restriction.
+It took three passes and a year of time, however, for upstream to fix all
+combinations of input parameters that would allow construction of arbitrary
+paths. Upstream did not verify and solve these on their own. Instead they only
+fixed the concrete issues we reported and, when we returned to the review, we
+found yet more ways to escape the `/usr` path restriction.
 
 In December 2024 we were close to whitelisting this D-Bus service. With this
 much time passed, however, we thought it would be better to have a fresh look
@@ -453,7 +453,7 @@ us in trying to establish a better security culture with Deepin upstream.
 ===========================================
 
 Given the security record of Deepin and the concerns expressed in the previous
-section, we don't recommend the use the Deepin desktop at this time. If you
+section, we don't recommend to use the Deepin desktop at this time. If you
 still would like to install (or continue using) the Deepin desktop on openSUSE
 Tumbleweed despite the existing security concerns, then you can add the Deepin
 devel project repositories to your system as follows:
@@ -530,6 +530,12 @@ Review Bugs
 - [deepin-api-proxy review bug][bugzilla:deepin-api-proxy] (bsc#1229918)
 - [deepin-system-monitor D-Bus additions review bug][bugzilla:deepin-system-monitor-dbus-addition] (bsc#1229918)
 - [deepin-system-monitor Polkit additions review bug][bugzilla:deepin-system-monitor-polkit-addition] (bsc#1233054)
+
+Change History
+==============
+
+|2025-05-08|Minor clarifications in [Section 3) 2019-05-05: deepin-file-manager](#2019-05-05-deepin-file-manager-d-bus-service-and-polkit-actions) and [Section 3) 2023-05-13: deepin-app-services](#2023-05-13-deepin-app-services-dde-dconfig-daemon-d-bus-service). Fixed a typo in [Section 5)](#5-how-to-continue-using-deepin-on-opensuse).|
+
 
 [deepin:website]: https://www.deepin.org/en/dde/
 [opensuse:security-guidelines]: https://en.opensuse.org/openSUSE:Package_security_guidelines#Audit_Bugs_for_the_Security_Team
