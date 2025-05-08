@@ -453,7 +453,7 @@ us in trying to establish a better security culture with Deepin upstream.
 ===========================================
 
 Given the security record of Deepin and the concerns expressed in the previous
-section, we don't recommend the use the Deepin desktop at this time. If you
+section, we don't recommend to use the Deepin desktop at this time. If you
 still would like to install (or continue using) the Deepin desktop on openSUSE
 Tumbleweed despite the existing security concerns, then you can add the Deepin
 devel project repositories to your system as follows:
