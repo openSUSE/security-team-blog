@@ -702,7 +702,7 @@ in the future.
 |Fedora 42     |5.0.0         |setgid-screen     |3.b (partly), 3.f            |5.0.0 is only found in the recently released Fedora 42|
 |Gentoo        |4.9.1         |setgid-utmp (setuid-root if multiuser USE flag is set)|3.b (partly)                             |5.0.0 is available via the unstable ebuild|
 |openSUSE TW   |4.9.1         |                  |3.b (partly)                 |                   |
-|FreeBSD 14.2  |4.9.1         |setuid-root       |3.b, 3.d, 3.e                |                   |
+|FreeBSD 14.2  |4.9.1         |setuid-root       |3.b, 3.d, 3.e                |Version 5.0.0 is optionally available but not yet stabilized.|
 |NetBSD 10.1   |5.0.0         |setuid-root       |3.a, 3.b, 3.c, 3.d, 3.e, 3.f (without visible crash) |update to 5.0.0 was only released recently|
 |OpenBSD 7.7   |4.9.1         |                  |3.b (partly)                 |                   |
 
