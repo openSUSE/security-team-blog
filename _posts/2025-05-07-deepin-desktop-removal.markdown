@@ -449,6 +449,12 @@ we as a security team can do. Given the size of the Deepin project we would
 also like to see other Linux distributions and the (security) community join
 us in trying to establish a better security culture with Deepin upstream.
 
+After publication of this report we received an email response from Deepin
+upstream and they also published [a blog post][upstream:blog-post-reaction] on
+the topic which contains similar content. They outline an action plan on how
+to improve the security stance of Deepin and also intend to solve any unfixed
+issues we reported by the end of May 2025.
+
 5) How to Continue Using Deepin on openSUSE
 ===========================================
 
@@ -535,6 +541,7 @@ Change History
 ==============
 
 |2025-05-08|Minor clarifications in [Section 3) 2019-05-05: deepin-file-manager](#2019-05-05-deepin-file-manager-d-bus-service-and-polkit-actions) and [Section 3) 2023-05-13: deepin-app-services](#2023-05-13-deepin-app-services-dde-dconfig-daemon-d-bus-service). Fixed a typo in [Section 5)](#5-how-to-continue-using-deepin-on-opensuse).|
+|2025-05-14|Added a note to the end of [section 4)](#4-conclusions-about-the-future-of-deepin-in-opensuse) about upstream's response to this report.|
 
 
 [deepin:website]: https://www.deepin.org/en/dde/
@@ -566,3 +573,4 @@ Change History
 [oss-security:deepin-clone]: https://www.openwall.com/lists/oss-security/2019/07/04/1
 [blog:deepin-api-proxy]: /2025/01/24/dde-api-proxy-privilege-escalation.html
 [section2]: #section-2-policy-bypass
+[upstream:blog-post-reaction]: https://bbs.deepin.org/en/post/287017
