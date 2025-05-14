@@ -301,9 +301,9 @@ descriptor securely via the UNIX domain socket to the target session.
 Thus to fix this, the temporary `chmod()` to mode 666 can be dropped. This
 is what is done in
 [patch 0001](/download/screen-4.9.1-patches/0001-attacher.c-prevent-temporary-0666-mode-on-PTYs-to-fi.txt)
-in [screen-4.9.1.tar.gz](/download/screen-4.9.1-patches.tar.gz) and
+in [screen-4.9.1-patches.tar.gz](/download/screen-4.9.1-patches.tar.gz) and
 [patch 0004](/download/screen-5.0.0-patches/0004-attacher.c-prevent-temporary-0666-mode-on-PTYs-to-fi.txt) in
-[screen-5.0.0.tar.gz](/download/screen-5.0.0-patches.tar.gz).
+[screen-5.0.0-patches.tar.gz](/download/screen-5.0.0-patches.tar.gz).
 
 Shortly before the publication of this report it was pointed out to us that
 this patch [likely breaks some reattach use
@@ -431,9 +431,9 @@ Cannot access /root/test: No such file or directory
 ### Bugfix
 
 [Patch 0002](/download/screen-4.9.1-patches/0002-Avoid-file-existence-test-information-leaks-to-fix-C.txt)
-in [screen-4.9.1.tar.gz](/download/screen-4.9.1-patches.tar.gz) and
+in [screen-4.9.1-patches.tar.gz](/download/screen-4.9.1-patches.tar.gz) and
 [patch 0005](/download/screen-5.0.0-patches/0005-Avoid-file-existence-test-information-leaks-to-fix-C.txt)
-in [screen-5.0.0.tar.gz](/download/screen-5.0.0-patches.tar.gz) address the
+in [screen-5.0.0-patches.tar.gz](/download/screen-5.0.0-patches.tar.gz) address the
 problem by only outputting generic error messages when Screen is installed
 setuid-root and when the target path is not controlled by the real UID of the
 process.
@@ -472,9 +472,9 @@ even without winning a race condition.
 ### Bugfix
 
 [Patch 0003](/download/screen-4.9.1-patches/0003-socket.c-don-t-send-signals-with-root-privileges-to-.txt)
-in [screen-4.9.1.tar.gz](/download/screen-4.9.1-patches.tar.gz) and
+in [screen-4.9.1-patches.tar.gz](/download/screen-4.9.1-patches.tar.gz) and
 [patch 0006](/download/screen-5.0.0-patches/0006-socket.c-don-t-send-signals-with-root-privileges-to-.txt)
-in [screen-5.0.0.tar.gz](/download/screen-5.0.0-patches.tar.gz)
+in [screen-5.0.0-patches.tar.gz](/download/screen-5.0.0-patches.tar.gz)
 address the problem by sending the actual signal with real UID privileges,
 just like `CheckPid()` does.
 
@@ -573,7 +573,7 @@ to refer to exactly this issue.
 ### Bugfix
 
 [Patch 0003](/download/screen-5.0.0-patches/0003-attacher.c-fix-bad-strncpy-which-can-lead-to-a-buffe.txt)
-in [screen-5.0.0.tar.gz](/download/screen-5.0.0-patches.tar.gz)
+in [screen-5.0.0-patches.tar.gz](/download/screen-5.0.0-patches.tar.gz)
 addresses this problem by changing `strncpy()` to `snprintf()` and by properly
 passing the amount of remaining space in the target buffer.
 
