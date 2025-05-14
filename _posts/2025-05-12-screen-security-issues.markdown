@@ -35,8 +35,12 @@ We offer two sets of patches for the issues described in this report, one for
 [screen-4.9.1](/download/screen-4.9.1-patches.tar.gz) and another for
 [screen-5.0.0](/download/screen-5.0.0-patches.tar.gz). These patch sets apply
 against the screen-4.9.1 and screen-5.0.0 release tarballs, respectively.
-Due to difficulties in the communication with upstream we do not currently
-have detailed information about bugfixes and releases published on their end.
+
+Upstream [announced Screen 5.0.1][upstream:release-announcement] that should
+address the issues found in this report. The release tarball is not available
+for download yet, but should appear on the [GNU download
+server][upstream:screen-download] soon.  For more details about upstream
+bugfixes please refer to section 8).
 
 The next section provides an overview of the Screen configurations and
 versions found on common Linux and UNIX distributions. Section 3) discusses
@@ -702,8 +706,42 @@ in the future.
 |NetBSD 10.1   |5.0.0         |setuid-root       |3.a, 3.b, 3.c, 3.d, 3.e, 3.f (without visible crash) |update to 5.0.0 was only released recently|
 |OpenBSD 7.7   |4.9.1         |                  |3.b (partly)                 |                   |
 
-8) Timeline
-===========
+8) Upstream Bugfixes
+====================
+
+Screen 4.9.1
+------------
+
+Upstream pushed bugfixes for Screen 4.9.1 onto their [screen-v4
+branch][git:branch:screen-v4]. The following bugfixes can be found there:
+
+- [commit 049b26b22e1][git:screen-v4:pty-mode-fix] fixes the PTY mode issue (item 3.b, CVE-2025-46802).
+- [commit e0eef5aac45][git:screen-v4:file-existence-fix] fixes the file existence test issue (item 3.d, CVE-2025-46804).
+- [commit 161f85b98b7][git:screen-v4:signal-fix] fixes the signal sending issue (item 3.e, CVE-2025-46805).
+
+We are not aware of upstream efforts to publish a 4.9.2 bugfix release, there
+also does not exist a new Git tag that contains these fixes.
+
+Screen 5.0.1
+------------
+
+To fix the issues found in Screen 5.0.0 upstream [announced a 5.0.1 bugfix
+release][upstream:release-announcement]. Upstream pushed bugfixes onto their
+[screen-v5 branch][git:branch:screen-v5]. The following bugfixes can be found
+there:
+
+- [commit e894caeff][git:screen-v5:logfile-reopen-fix] fixes the logfile reopen issue (item 3.a, CVE-2025-23395)
+- [commit d10eb5b2f][git:screen-v5:pty-mode-fix] fixes the PTY mode issue (item 3.b, CVE-2025-46802).
+- [commit d5d7bf43f][git:screen-v5:default-pty-mode-fix] fixes the default PTY mode issue (item 3.c, CVE-2025-46803)
+- [commit 710cda5c7][git:screen-v5:file-existence-fix] fixes the file existence test issue (item 3.d, CVE-2025-46804).
+- [commit a17b0da26][git:screen-v5:signal-fix] fixes the signal sending issue (item 3.e, CVE-2025-46805).
+- [commit 2bdebfc98][git:screen-v5:strncpy-fix] fixes the strncpy related crashes (item 3.f).
+
+There also exists a [v.5.0.1][git:release-tag-5-0-1] Git tag containing the
+fixes.
+
+Timeline
+========
 
 |2024-07-01|A review request from upstream was [forwarded to us][bugzilla:screen-audit].|
 |2025-01-08|We started working on the review.|
@@ -719,17 +757,24 @@ in the future.
 |2025-05-07|Further attempts to develop the missing bugfixes in cooperation with upstream seemed futile. We started to develop all necessary patches on our own, some of them based on patches that had already been discussed in the upstream Savannah bugs. We shared the finished and tested patches for screen 4.9.1 and screen 5.0.0 with the distros mailing list and upstream.|
 |2025-05-08|Upstream complained about wrong `Author:` tags in some of the patches we distributed (we did not receive formally finished patches from upstream, only copy/paste snippets). Thus we adjusted the authorship information for these patches to accommodate for this complaint and shared the updated result with the distros mailing list again.|
 |2025-05-12|Publication of the report happened as planned on our blog and on the oss-security mailing list.|
+|2025-05-13|We reviewed the commits in the upstream screen-v4 and screen-v5 branches that have been published by now.|
 
-9) References
-=============
+References
+==========
 
 - [Screen GNU Savannah Project Page][upstream:savannah]
 - [openSUSE Bugzilla Screen Review Bug][bugzilla:screen-audit]
-- [Links to Private GNU Savannah Bugs (it seems upstream cannot make them
-  accessible even after publication)][bugzilla:savannah-links]
+- [Links to Private GNU Savannah Bugs (it seems upstream cannot make them accessible even after publication)][bugzilla:savannah-links]
+
+Change History
+==============
+
+|2025-05-14|Added upstream release information. Fixed some incomplete labels for the patch tarball download name.|
 
 [upstream:savannah]: https://savannah.gnu.org/projects/screen
 [upstream:users-mailing-list-crash]: https://lists.gnu.org/archive/html/screen-users/2024-12/msg00000.html
+[upstream:release-announcement]: https://lists.gnu.org/archive/html/screen-users/2025-05/msg00005.html
+[upstream:screen-download]: https://ftp.gnu.org/gnu/screen
 [bugzilla:screen-audit]: https://bugzilla.suse.com/show_bug.cgi?id=1227243
 [bugzilla:savannah-links]: https://bugzilla.suse.com/show_bug.cgi?id=1227243#c8
 [bugzilla:pty-chmod-patch-concern]: https://bugzilla.suse.com/show_bug.cgi?id=1242269#c9
@@ -739,6 +784,7 @@ in the future.
 [git:pty-mode-switch-reintroduction]: https://git.savannah.gnu.org/cgit/screen.git/commit/?id=78a961188f7
 [git:strncpy-refactoring]: https://git.savannah.gnu.org/cgit/screen.git/commit/?id=0dc67256
 [git:release-tag-5-0-0]: https://git.savannah.gnu.org/cgit/screen.git/tag/?h=v.5.0.0
+[git:release-tag-5-0-1]: https://git.savannah.gnu.org/cgit/screen.git/tag/?h=v.5.0.1
 [git:attach-chmod]: https://git.savannah.gnu.org/cgit/screen.git/tree/src/attacher.c?h=v.5.0.0#n120 
 [git:attach-mode-restore]: https://git.savannah.gnu.org/cgit/screen.git/tree/src/attacher.c?h=v.5.0.0#n284
 [git:attach-missing-restore]: https://git.savannah.gnu.org/cgit/screen.git/tree/src/attacher.c?h=v.5.0.0#n160
@@ -754,6 +800,17 @@ in the future.
 [git:check-pid]: https://git.savannah.gnu.org/cgit/screen.git/tree/src/socket.c?h=v.5.0.0#n555
 [git:struct-message-command]: https://git.savannah.gnu.org/cgit/screen.git/tree/src/screen.h?h=v.5.0.0#n148
 [git:socket-kill-insufficient-fix]: https://git.savannah.gnu.org/cgit/screen.git/patch/?id=e9ad41bfedb4537a6f0de20f00b27c7739f168f7
+[git:branch:screen-v4]: https://git.savannah.gnu.org/cgit/screen.git/log/?h=screen-v4
+[git:branch:screen-v5]: https://git.savannah.gnu.org/cgit/screen.git/log/?h=screen-v5
+[git:screen-v4:signal-fix]: https://git.savannah.gnu.org/cgit/screen.git/commit/?h=screen-v4&id=161f85b98b7e1d5e4893aeed20f4cdb5e3dfaaa4
+[git:screen-v4:file-existence-fix]: https://git.savannah.gnu.org/cgit/screen.git/commit/?h=screen-v4&id=e0eef5aac453fa98a2664416a56c50ad1d00cb30
+[git:screen-v4:pty-mode-fix]: https://git.savannah.gnu.org/cgit/screen.git/commit/?h=screen-v4&id=049b26b22e197ba3be9c46e5c193032e01a4724a
+[git:screen-v5:strncpy-fix]: https://git.savannah.gnu.org/cgit/screen.git/commit/?h=screen-v5&id=2bdebfc9837cfd3cea0645030e626b08bb6bc2d0
+[git:screen-v5:logfile-reopen-fix]: https://git.savannah.gnu.org/cgit/screen.git/commit/?h=screen-v5&id=e894caeffccdb62f9c644989a936dc7ec83cc747
+[git:screen-v5:pty-mode-fix]: https://git.savannah.gnu.org/cgit/screen.git/commit/?h=screen-v5&id=d10eb5b2f7eebaa347f09c010bd391373fdd1695
+[git:screen-v5:default-pty-mode-fix]: https://git.savannah.gnu.org/cgit/screen.git/commit/?h=screen-v5&id=d5d7bf43f3842e8b62d5f34eb4b031de7c8098c1
+[git:screen-v5:file-existence-fix]: https://git.savannah.gnu.org/cgit/screen.git/commit/?h=screen-v5&id=710cda5c71cacfed201b5659e04a83815313d8e6
+[git:screen-v5:signal-fix]: https://git.savannah.gnu.org/cgit/screen.git/commit/?h=screen-v5&id=a17b0da26494856640bd9d52a03fc1b575400170
 [opensuse:disclosure-policy]: https://en.opensuse.org/openSUSE:Security_disclosure_policy
 [distros-mailing-list]: https://oss-security.openwall.org/wiki/mailing-lists/distros
 [screen-man-page]: https://linux.die.net/man/1/screen
