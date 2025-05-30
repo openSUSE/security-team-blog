@@ -423,7 +423,7 @@ Arch Linux is affected by all the issues.
 |**Kea Socket Dir** | /run/kea, owned by `_kea:_kea` mode 0755     |
 |**Kea Log Dir**    | /var/log/kea, owned by `_kea:_kea` mode 0750 |
 |**Kea State Dir**  | /var/lib/kea, mode 0755                      |
-|**Affected By**    | 3.2 (partially), 3.3 (partially), 3.6        |
+|**Affected By**    | 3.1 (partially), 3.2 (partially), 3.3 (partially), 3.6 |
 
 When we first discovered these issues we looked into Debian 12.10. Meanwhile
 Debian 12.11 has been released. The situation seems to be the same in both
@@ -464,6 +464,41 @@ will be 0644, however, so the attacker is still not able to write to the file.
 Our research shows that there is only a very thin line of defense left against
 this arbitrary code execution in `_kea:_kea` context on Debian, but it seems
 to hold.
+
+#### Update
+
+Jakub Wilk [shared a working attack vector][oss-sec:acl-attack-vector] on the
+oss-security mailing list which makes it possible to overcome the AppArmor
+restrictions after all. To allow code execution, a default ACL (access control
+list) entry can be assigned to `$HOME/.Private`:
+
+```sh
+$ setfacl -d -m u:$LOGNAME:rwx ~/.Private/
+```
+
+The mode of newly created files in this directory will be the bitwise AND
+between the default ACL setting and the `mode` parameter used by the program
+that creates the file (the process's `umask` is not used in this case). When
+observed with `strace`, the creation of configuration files by Kea looks like
+this:
+
+    openat(AT_FDCWD, "/home/<user>/.Private/libexploit.so", O_WRONLY|O_CREAT|O_TRUNC, 0666) = 14
+
+As a result, the `libexploit.so` created by Kea will end up with a mode of
+`0666`. The executable bits will be missing, but Linux allows to `mmap()`
+executable code from the file even if it doesn't have executable bits assigned.
+This is enough for the `dlopen()` within Kea to succeed and for arbitrary code
+to be executed. Actual library code can simply be redirected into a
+`libexploit.so` that was previously created by Kea:
+
+```sh
+$ cat /path/to/librealexploit.so >~/.Private/libexploit.so
+```
+
+The exploit code will still be restricted by the AppArmor profiles applied to
+the Kea processes. This means that e.g. only files allowed to be written to by
+the AppArmor profiles can be modified. This still makes it possible to control
+all Kea state on disk.
 
 6.3) Ubuntu Linux
 -----------------
@@ -641,7 +676,7 @@ cover multiple of the issues found in this report.
 |   CVE          | Corresponding Issues | Description                                                               |
 | -------------- | -------------------- | ------------------------------------------------------------------------- |
 | CVE-2025-32801 | 3.1                  | Loading a malicious hook library can lead to local privilege escalation.  |
-| CVE-2025-32802 | 3.2, 3.2, 3.4, 3.5   | Insecure handling of file paths allows multiple local attacks.            |
+| CVE-2025-32802 | 3.2, 3.3, 3.4, 3.5   | Insecure handling of file paths allows multiple local attacks.            |
 | CVE-2025-32803 | 3.6, 3.7             | Insecure file permissions can result in confidential information leakage. |
 
 Timeline
@@ -655,6 +690,11 @@ Timeline
 |2025-05-22|Kea upstream shared links to private bugfix releases 2.4.2, 2.6.3, and 2.7.9, containing fixes for the issues, both with the distros mailing list and in the private GitLab issue.|
 |2025-05-26|We inspected the differences between version 2.6.2 and version 2.6.3 and found the bugfixes to be thorough.|
 |2025-05-28|Publication happened as planned.|
+
+Change History
+==============
+
+|2025-05-30|Added additional attack vector to <a href="#section-affectedness">section 6.2)</a> to overcome AppArmor on Debian Linux. Fixed missing entry for issue 3.3 in <a href="#section-cves">section 7)</a>.|
 
 References
 ==========
@@ -678,3 +718,4 @@ References
 [code:libstdpp-murmur-hash]: https://github.com/gcc-mirror/gcc/blob/97a36b466ba1420210294f0a1dd7002054ba3b7e/libstdc%2B%2B-v3/libsupc%2B%2B/hash_bytes.cc#L74
 [code:libstdpp-murmur-seed]: https://github.com/gcc-mirror/gcc/blob/97a36b466ba1420210294f0a1dd7002054ba3b7e/libstdc%2B%2B-v3/include/bits/functional_hash.h#L205
 [pkgsrc]: https://pkgsrc.org
+[oss-sec:acl-attack-vector]: https://www.openwall.com/lists/oss-security/2025/05/28/11
