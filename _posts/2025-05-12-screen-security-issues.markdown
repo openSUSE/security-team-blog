@@ -27,9 +27,9 @@ request with lower priority, since we already had a cursory look at Screen
 a few years earlier, without finding any problems. When we actually found time to
 look into it again, we were surprised to find a local root exploit in the
 Screen 5.0.0 major version update affecting distributions that ship it as
-setuid-root (Arch Linux and NetBSD). We also found a number of additional,
-less severe issues that partly also affect older Screen versions still found
-in the majority of distributions.
+setuid-root (Arch Linux and NetBSD[^netbsd-info]). We also found a number of
+additional, less severe issues that partly also affect older Screen versions
+still found in the majority of distributions.
 
 We offer two sets of patches for the issues described in this report, one for
 [screen-4.9.1](/download/screen-4.9.1-patches.tar.gz) and another for
@@ -186,6 +186,10 @@ reopen.
 Arch Linux is fully affected by this issue, since it ships the version 5.0.0
 release and assigns the setuid-root bit. Screen is not installed by default
 on Arch, however.
+
+As a reaction to these security issues, the setuid-root bit meanwhile has been
+[removed from Arch Linux][arch:drop-setuid-commit] after [some
+discussions][arch:drop-setuid-req].
 
 #### Fedora Linux
 
@@ -703,8 +707,13 @@ in the future.
 |Gentoo        |4.9.1         |setgid-utmp (setuid-root if multiuser USE flag is set)|3.b (partly)                             |5.0.0 is available via the unstable ebuild|
 |openSUSE TW   |4.9.1         |                  |3.b (partly)                 |                   |
 |FreeBSD 14.2  |4.9.1         |setuid-root       |3.b, 3.d, 3.e                |Version 5.0.0 is optionally available but not yet stabilized.|
-|NetBSD 10.1   |5.0.0         |setuid-root       |3.a, 3.b, 3.c, 3.d, 3.e, 3.f (without visible crash) |update to 5.0.0 was only released recently|
+|NetBSD 10.1   |5.0.0         |setuid-root       |3.a, 3.b, 3.c, 3.d, 3.e, 3.f (without visible crash) |based on the [pkgsrc] package[^netbsd-info], update to 5.0.0 was only released recently.|
 |OpenBSD 7.7   |4.9.1         |                  |3.b (partly)                 |                   |
+
+[^netbsd-info]: Installation of Screen on NetBSD is possible using the [pkgsrc][pkgsrc] package manager, which
+    provides a Screen binary distribution that we looked into. The affected
+    binary packages are also available on other operating systems like SmartOS
+    and MacOS.
 
 8) Upstream Bugfixes
 ====================
@@ -770,6 +779,7 @@ Change History
 ==============
 
 |2025-05-14|Added upstream release information. Fixed some incomplete labels for the patch tarball download name.|
+|2025-05-30|Added clarification about NetBSD using pkgsrc binaries[^netbsd-info]. Added information about Arch Linux dropping the setuid-root bit as a response to these issues.|
 
 [upstream:savannah]: https://savannah.gnu.org/projects/screen
 [upstream:users-mailing-list-crash]: https://lists.gnu.org/archive/html/screen-users/2024-12/msg00000.html
@@ -814,3 +824,6 @@ Change History
 [opensuse:disclosure-policy]: https://en.opensuse.org/openSUSE:Security_disclosure_policy
 [distros-mailing-list]: https://oss-security.openwall.org/wiki/mailing-lists/distros
 [screen-man-page]: https://linux.die.net/man/1/screen
+[pkgsrc]: https://pkgsrc.org
+[arch:drop-setuid-req]: https://gitlab.archlinux.org/archlinux/packaging/packages/screen/-/merge_requests/2
+[arch:drop-setuid-commit]: https://gitlab.archlinux.org/archlinux/packaging/packages/screen/-/commit/0de034ecc5620805b0af0f95eafa3226bfa42478
