@@ -63,3 +63,5 @@ exclude:
 #   - vendor/cache/
 #   - vendor/gems/
 #   - vendor/ruby/
+
+piwik_site_id: 68
