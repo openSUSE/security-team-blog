@@ -22,7 +22,7 @@ OpenSUSE Tumbleweed recently switched to using SELinux by default. While general
 this change caused problems in particular when playing Windows games through Proton or Wine.
 This post will provide context and introduce the solution the openSUSE SELinux team came up with.
 
-Section 2 gives an overview of SELinux and introduce the primitives necessary to understand the
+Section 2 gives an overview of SELinux and introduces the primitives necessary to understand the
 issue and solution. Section 3 takes a closer look at the root cause of the problem and the manual
 steps needed to work around the issue in the past. Section 4 discusses the requirements for a
 better solution and how it was implemented in the end. Section 5 closes with information on how to
@@ -35,8 +35,8 @@ OpenSUSE Tumbleweed switched to SELinux as the default [Mandatory Access Control
 mechanism for new installations in [February 2025][news:default].
 
 The central reason for the change was that we consider SELinux the more encompassing solution:
-security problems with a program do not pose a threat to the whole system, rather a compromise
-can be confined to the affected program or daemon.
+security problems with a program do not pose a threat to the whole system, rather a system
+compromise can be confined to the affected program or daemon.
 
 SELinux provides a powerful and detailed language to describe _expected_ application behaviour.
 Allowing to confine a process, referred to as a SELinux domain, by limiting access to required system resources and describing the
