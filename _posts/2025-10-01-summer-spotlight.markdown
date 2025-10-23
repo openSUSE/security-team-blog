@@ -273,7 +273,9 @@ signal is sent to a PID controlled by the `sssd` service user:
 We created a public [upstream GitHub issue][logrotate:sssd:issue] to make the
 developers aware of the problem. There is no fix available yet for the issue.
 
-### Icinga2
+<a name="section-icinga-cve"/>
+
+### Icinga2 (CVE-2025-61909)
 
 In our icinga2 package there is yet another instance of sending a signal
 (`SIGUSR1`) to a PID controlled by the unprivileged `icinga` service user:
@@ -284,7 +286,8 @@ In our icinga2 package there is yet another instance of sending a signal
 
 We wanted to change that into a `systemctl reload icinga2.service` instead,
 only to find out that upstream's reload script is [affected by the same
-issue][logrotate:icinga:issue]. There is no fix available for this issue yet.
+issue][logrotate:icinga:issue]. We reported the problem to upstream and they
+[fixed it and assigned a CVE][logrotate:icinga:announcement] by now.
 
 ### exim (CVE-2025-53881)
 
@@ -568,6 +571,11 @@ the Linux ecosystem in general and openSUSE in particular. We're looking
 forward to the next issue of the spotlight series in about three months from
 now.
 
+Change History
+==============
+
+|2025-10-23|Updated the logrotate [Icinga2][section-icinga-cve] sub-section to include the upstream CVE and a link to the upstream security advisory.|
+
 [bugzilla:bash-git-prompt]: https://bugzilla.suse.com/show_bug.cgi?id=1247489
 [bugzilla:chronyc]: https://bugzilla.suse.com/show_bug.cgi?id=1246544
 [bugzilla:gnome:gdm]: https://bugzilla.suse.com/show_bug.cgi?id=1248881
@@ -594,6 +602,7 @@ now.
 [logrotate:code:writable-check]: https://github.com/logrotate/logrotate/blob/4c4023aef1824c03e5be0ffee503fef6a6c2668d/logrotate.c#L1448
 [logrotate:exim:config]: https://build.opensuse.org/projects/openSUSE:Factory/packages/exim/files/exim.logrotate?expand=1
 [logrotate:icinga:issue]: https://github.com/Icinga/icinga2/issues/10527
+[logrotate:icinga:announcement]: https://icinga.com/blog/releasing-icinga-2-v2-15-1-2-14-7-and-2-13-13-and-icinga-db-web-v1-2-3-and-1-1-4
 [logrotate:mailman:config]: https://build.opensuse.org/projects/openSUSE:Factory/packages/python-mailman/files/mailman.logrotate?expand=1&rev=f52eeb756d292f335b10d5e8a2ed822e
 [logrotate:munge:pr]: https://github.com/dun/munge/pull/157
 [logrotate:sssd:config]: https://github.com/SSSD/sssd/blob/2d6ef923e1309ca3bef2b6093b91f736c81d608b/src/examples/logrotate.in
@@ -624,4 +633,5 @@ now.
 [section-systemd]: #section-systemd
 [section-training]: #section-training
 [section-varlink]: #section-varlink
+[section-icinga-cve]: #section-icinga-cve
 [microos]: https://microos.opensuse.org
