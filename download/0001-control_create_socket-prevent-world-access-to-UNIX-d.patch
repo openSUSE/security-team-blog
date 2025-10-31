@@ -1,0 +1,37 @@
+From de8b223f42ceffebf17e0cc5fef4878ab6dcfa27 Mon Sep 17 00:00:00 2001
+From: Matthias Gerstner <matthias.gerstner@suse.de>
+Date: Mon, 27 Oct 2025 13:06:47 +0100
+Subject: [PATCH] control_create_socket(): prevent world-access to UNIX domain
+ socket
+
+This addresses CVE-2025-62875 by dropping the world-readable and
+world-writable bits from the UNIX domain socket. This way only
+privileged clients can send messages to smtpd and thus the problematic
+call to `fatal()` is no longer reachable to unprivileged users.
+
+This can break some use cases when non-root users are using `sendmail` to
+enqueue mail messages locally.
+
+There seems still a memory leak to be reachable via this UNIX domain socket,
+thus on the positive side this patch avoids any potential left security issues
+found in the handling of socket.
+---
+ usr.sbin/smtpd/control.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/usr.sbin/smtpd/control.c b/usr.sbin/smtpd/control.c
+index eb7ef10e..96060bbd 100644
+--- a/usr.sbin/smtpd/control.c
++++ b/usr.sbin/smtpd/control.c
+@@ -194,7 +194,7 @@ control_create_socket(void)
+ 	(void)umask(old_umask);
+ 
+ 	if (chmod(SMTPD_SOCKET,
+-		S_IRUSR|S_IWUSR|S_IRGRP|S_IWGRP|S_IROTH|S_IWOTH) == -1) {
++		S_IRUSR|S_IWUSR|S_IRGRP|S_IWGRP) == -1) {
+ 		(void)unlink(SMTPD_SOCKET);
+ 		fatal("control: chmod");
+ 	}
+-- 
+2.51.0
+
