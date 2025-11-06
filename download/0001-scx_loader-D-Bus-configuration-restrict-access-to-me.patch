@@ -1,0 +1,32 @@
+From f0fe83b7eef0ffa6be9c08e7905b10b93ec7cfc6 Mon Sep 17 00:00:00 2001
+From: Matthias Gerstner <matthias.gerstner@suse.de>
+Date: Tue, 4 Nov 2025 12:29:48 +0100
+Subject: [PATCH] scx_loader D-Bus configuration: restrict access to members of
+ scx group
+
+To avoid the unauthenticated D-Bus interface being accessible to all
+users in the system, tighten the D-Bus policy to restrict access to
+members of the "scx" group.
+
+This way access to the D-Bus service is opt-in only. Any users allowed
+to access the D-Bus service likely can completely lock up the system.
+---
+ tools/scx_loader/org.scx.Loader.conf | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/tools/scx_loader/org.scx.Loader.conf b/tools/scx_loader/org.scx.Loader.conf
+index 81a1e340..b2fd00c6 100644
+--- a/tools/scx_loader/org.scx.Loader.conf
++++ b/tools/scx_loader/org.scx.Loader.conf
+@@ -8,7 +8,7 @@
+         <allow send_destination="org.scx.Loader"/>
+         <allow receive_sender="org.scx.Loader"/>
+     </policy>
+-    <policy context="default">
++    <policy group="scx">
+         <allow send_destination="org.scx.Loader"/>
+         <allow receive_sender="org.scx.Loader"/>
+     </policy>
+-- 
+2.51.0
+
