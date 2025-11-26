@@ -1,0 +1,51 @@
+// Define a mixin to house our custom dark-mode variables based on SUSE brand colors
+@mixin suse-dark-variables {
+  // SUSE Brand Colors for Dark Mode
+  $suse-dark-bg: #173f4f;
+  $suse-text-color: #ffffff;
+  $suse-link-color: #00a489; // Dark Cyan
+  $suse-grey-dark: #2f5361; // Dark Blue 90% for borders/secondary grey
+  $suse-code-bg: #2f5361;
+
+  // Override Minima's default variables when in dark mode
+  --background-color: #{$suse-dark-bg};
+  --text-color: #{$suse-text-color};
+  --brand-color: #{$suse-link-color};
+  --link-base-color: #{$suse-link-color};
+  --link-hover-color: lighten($suse-link-color, 10%);
+  --grey-color-light: #{$suse-grey-dark};
+  --grey-color-dark: #{$suse-grey-dark};
+  --table-background-color: #{$suse-grey-dark};
+  --code-background-color: #{$suse-code-bg};
+}
+
+// 1. Smooth Transition for Color Changes
+// Apply transitions to the root element for a smoother theme switch.
+html {
+  transition:
+    color 0.3s ease,
+    background-color 0.3s ease;
+}
+
+// 2. Apply SUSE Dark Colors
+// This selector targets the <html> element when JavaScript sets the data-theme='dark' attribute.
+html[data-theme="dark"] {
+  @include suse-dark-variables;
+}
+
+// 3. Style the Toggle Button
+#theme-toggle {
+  background: none;
+  border: 1px solid var(--grey-color-light); // Border adapts to theme
+  color: var(--text-color); // Text adapts to theme
+  padding: 0.5em 1em;
+  cursor: pointer;
+  border-radius: 4px;
+  margin-left: 1em;
+  transition: all 0.3s ease;
+  font-weight: bold;
+
+  &:hover {
+    background: var(--grey-color-light);
+  }
+}

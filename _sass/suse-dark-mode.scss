@@ -1,0 +1,99 @@
+// Define the SUSE Brand Colors for Dark Mode
+$suse-dark-bg: #173f4f; // Dark Blue
+$suse-text-color: #ffffff; // White
+$suse-link-color: #00a489; // Dark Cyan
+$suse-grey-dark: #2f5361; // Dark Blue 90% for borders/secondary grey
+
+// 1. Apply dark mode globally by targeting the body with the 'dark-mode' class
+body.dark-mode {
+  background-color: $suse-dark-bg;
+  color: $suse-text-color;
+
+  // Override general text colors (h1, h2, etc.)
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    color: $suse-text-color;
+  }
+
+  // Override link colors
+  a {
+    color: $suse-link-color;
+
+    &:hover {
+      color: lighten($suse-link-color, 15%);
+    }
+  }
+
+  // Override the site header/footer background
+  .site-header,
+  .site-footer {
+    border-top-color: $suse-grey-dark;
+    border-bottom-color: $suse-grey-dark;
+    background-color: darken($suse-dark-bg, 3%); // Slightly darker header
+  }
+
+  // Override nav item colors
+  .site-nav .page-link {
+    color: $suse-text-color;
+  }
+
+  // Override the grey for borders, tables, and blockquotes
+  blockquote {
+    color: $suse-text-color;
+    border-left-color: $suse-link-color;
+  }
+
+  // Override code/syntax highlighting background
+  .highlight,
+  pre,
+  code {
+    background-color: $suse-grey-dark !important;
+    color: $suse-text-color !important;
+  }
+  .highlighter-rouge .highlight {
+    background: $suse-grey-dark;
+  }
+}
+
+// 2. Style the Toggle Button (Keep this outside the dark-mode class for consistent styling)
+#theme-toggle {
+  background: none;
+  // We use a CSS variable for text-color in the JS to adapt the button text color to the theme,
+  // but the button's background should be set explicitly with SASS variables for v2.5.1.
+  color: $suse-text-color;
+  border: 1px solid $suse-grey-dark;
+  padding: 0.5em 1em;
+  cursor: pointer;
+  border-radius: 4px;
+  margin-left: 1em;
+  transition: all 0.3s ease;
+  font-weight: bold;
+
+  // Use a high-specificity selector for the hover effect
+  body.dark-mode &:hover {
+    background: $suse-grey-dark;
+  }
+  body:not(.dark-mode) & {
+    color: #555; // Default Minima text color
+    border-color: #e8e8e8; // Default Minima light border
+  }
+  body:not(.dark-mode) &:hover {
+    background: #f8f8f8;
+  }
+
+  // Override the tag class for Dark Mode
+  .tag {
+    // Dark Mode: Use Dark Cyan for the background
+    background-color: $suse-link-color; // #00a489
+    color: #ffffff !important; // White text on Dark Cyan background
+
+    // Ensure links inside the tag are also white
+    a {
+      color: #ffffff !important;
+    }
+  }
+}
