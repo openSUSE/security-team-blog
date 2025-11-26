@@ -1,0 +1,46 @@
+<button id="theme-toggle" title="Toggle Light/Dark Theme">🌙 Dark Mode</button>
+
+<script>
+  // Script to handle theme switching and persistence for Minima 2.5.1
+  (function () {
+    const body = document.body;
+    const toggle = document.getElementById("theme-toggle");
+    const darkModeKey = "minima_dark_mode"; // Use a simple key
+
+    // 1. Get the current theme preference
+    let isDarkMode = localStorage.getItem(darkModeKey) === "true";
+
+    // 2. Function to apply the class and update storage/button text
+    function applyTheme(enableDark) {
+      if (enableDark) {
+        body.classList.add("dark-mode");
+        toggle.innerHTML = "💡 Light Mode";
+        localStorage.setItem(darkModeKey, "true");
+      } else {
+        body.classList.remove("dark-mode");
+        toggle.innerHTML = "🌙 Dark Mode";
+        localStorage.setItem(darkModeKey, "false");
+      }
+      isDarkMode = enableDark;
+    }
+
+    // 3. Set the theme on page load
+    applyTheme(isDarkMode);
+
+    // 4. Add the click listener
+    toggle.addEventListener("click", () => {
+      // Toggle the mode
+      applyTheme(!isDarkMode);
+    });
+
+    // Optional: Check for system preference if no user preference is saved
+    if (localStorage.getItem(darkModeKey) === null) {
+      if (
+        window.matchMedia &&
+        window.matchMedia("(prefers-color-scheme: dark)").matches
+      ) {
+        applyTheme(true);
+      }
+    }
+  })();
+</script>

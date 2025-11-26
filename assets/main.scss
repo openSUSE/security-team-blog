@@ -1,100 +1,151 @@
 ---
 ---
 
-// Overwrite assets/main.css
-$brand-color:      #30ba78;
+// Define SUSE Light Mode Variables (These override Minima's defaults)
+$background-color: #f8f8f8; // SUSE Light Background
+$base-font-color: #333333; // SUSE Dark Text
+$brand-color: #30ba78;
+// $brand-color: #73ba25; // SUSE Green for links/brand elements
+$grey-color-light: #e8e8e8; // SUSE Light Grey for borders/dividers
+$grey-color-dark: #828282; // Mid-grey for secondary text (e.g., dates)
+$text-color: $base-font-color;
+
+// --- SUSE BRAND LIGHT MODE HEADER FIX ---
+// The header background is green, so the links must be white for contrast.
+.site-header {
+  background-color: $brand-color; // Minima might already use this, but it's safe to ensure.
+
+  // Target the navigation links inside the header
+  .site-nav .page-link,
+  .site-title,
+  #theme-toggle {
+    // Also ensuring the toggle button text is white in light mode
+    color: #ffffff !important; // Use white for high contrast
+  }
+
+  // Ensure the hover state is still visible but light
+  .site-nav .page-link:hover {
+    color: rgba(
+      255,
+      255,
+      255,
+      0.8
+    ) !important; // Slightly transparent white on hover
+  }
+}
+// ----------------------------------------
+
+// --- SUSE BRAND LIGHT MODE TAG FIX ---
+.tag {
+  // Light Mode: Use the specified brand green background
+  background-color: #30ba78;
+  color: #ffffff !important; // Use white text for high contrast on green
+
+  // Ensure links inside the tag are also white
+  a {
+    color: #ffffff !important;
+  }
+}
+// ----------------------------------------
 
 .site-title::before {
-	content: url("/assets/images/suse-white-logo-green.svg");
-	display: inline-block;
-	position: relative;
-	width: 35px;
-	top: 5px;
+  content: url("/assets/images/suse-white-logo-green.svg");
+  display: inline-block;
+  position: relative;
+  width: 35px;
+  top: 5px;
 }
 
 .site-header {
-	background-color: #0c322c;
+  background-color: #0c322c;
 }
 
 $base-font-family: "Poppins Regular", Poppins, Arial, sans-serif;
 
-h1{
-    font-weight: bold !important;
+h1 {
+  font-weight: bold !important;
 }
 
 // Import partials from the `minima` theme.
 @import "minima";
 
+// Import your custom dark mode styles from your _sass directory
+@import "suse-dark-mode";
+
+// Color stuff
+// Commented out to reflect dark / light theming
+// Overwrite assets/main.css
+
 // Overwrite settings from _sass/minima/
-.site-title, .site-title:visited {
-	color: #efefef;
-}
+// .site-title, .site-title:visited {
+// 	color: #efefef;
+// }
 
-.site-nav .page-link {
-	color: #efefef;
-}
+// .site-nav .page-link {
+// 	color: #efefef;
+// }
 
-.site-nav .menu-icon > svg {
-	fill: #efefef;
-}
+// .site-nav .menu-icon > svg {
+// 	fill: #efefef;
+// }
 
-.site-nav {
-	background: #0c322c;
-}
+// .site-nav {
+// 	background: #0c322c;
+// }
 
 // fix h1 heading: https://github.com/jekyll/minima/pull/273/files
 .post-content h1 {
-	@include relative-font-size(1.825);
-	letter-spacing: -1px;
-	line-height: 1;
-	@include media-query($on-laptop) {
-		@include relative-font-size(1.60);
-	}
+  @include relative-font-size(1.825);
+  letter-spacing: -1px;
+  line-height: 1;
+  @include media-query($on-laptop) {
+    @include relative-font-size(1.6);
+  }
 }
 
 .post-content h2 {
-	@include relative-font-size(1.350);
-	letter-spacing: -1px;
-	line-height: 1;
-	@include media-query($on-laptop) {
-		@include relative-font-size(1.20);
-	}
+  @include relative-font-size(1.35);
+  letter-spacing: -1px;
+  line-height: 1;
+  @include media-query($on-laptop) {
+    @include relative-font-size(1.2);
+  }
 }
 
 .post-content h3 {
-	@include relative-font-size(1.200);
-	letter-spacing: -1px;
-	line-height: 1;
-	@include media-query($on-laptop) {
-		@include relative-font-size(1.05);
-	}
+  @include relative-font-size(1.2);
+  letter-spacing: -1px;
+  line-height: 1;
+  @include media-query($on-laptop) {
+    @include relative-font-size(1.05);
+  }
 }
 
 // fix title line height
 .post-title {
-	line-height: $base-line-height * $base-font-size * 2.25;
+  line-height: $base-line-height * $base-font-size * 2.25;
 }
 
 .post-list h3 {
-    margin-bottom: 0px;
+  margin-bottom: 0px;
 }
 
 .tag {
-	margin: 0 2px;
-	padding: 4px 10px;
-	color: #fff;
-	font-size: 80%;
-	// font-family: sans-serif;
-	text-decoration: none;
-	text-transform: uppercase;
+  margin: 0 2px;
+  padding: 4px 10px;
+  color: #fff;
+  font-size: 80%;
+  // font-family: sans-serif;
+  text-decoration: none;
+  text-transform: uppercase;
 }
 
 .tag_persimmon {
-	background: #FE7C3F;
+  background: #fe7c3f;
 }
 .tag_mint {
-	background: #90EBCD;
+  background: #90ebcd;
 }
 .tag_jungle {
-    background: #30BA78;
+  background: #30ba78;
 }
