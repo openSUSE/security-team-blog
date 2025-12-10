@@ -10,6 +10,36 @@ $grey-color-light: #e8e8e8; // SUSE Light Grey for borders/dividers
 $grey-color-dark: #828282; // Mid-grey for secondary text (e.g., dates)
 $text-color: $base-font-color;
 
+// --- SUSE BRAND LIGHT MODE TABLE FIX ---
+table {
+  border-collapse: collapse;
+  width: 100%;
+
+  // Ensure all table borders and text use the desired colors
+  th,
+  td {
+    border: 1px solid $grey-color-light; // Subtle light border
+    color: $base-font-color; // Dark text
+  }
+
+  // Default row background
+  tr {
+    background-color: #ffffff; // Use pure white for one row
+  }
+
+  // Zebra striping for improved readability (lighter grey)
+  tr:nth-child(even) {
+    background-color: #f0f0f0; // Use a slightly darker light grey for contrast
+  }
+
+  // Ensure table headers stand out (using the SUSE Brand Color)
+  th {
+    background-color: lighten($brand-color, 40%); // Very light green header
+    font-weight: bold;
+  }
+}
+// ----------------------------------------
+
 // --- SUSE BRAND LIGHT MODE HEADER FIX ---
 // The header background is green, so the links must be white for contrast.
 .site-header {

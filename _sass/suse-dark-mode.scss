@@ -57,6 +57,56 @@ body.dark-mode {
   .highlighter-rouge .highlight {
     background: $suse-grey-dark;
   }
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    border: 1px solid $suse-grey-dark; // Dark border for subtle separation
+    color: $suse-text-color !important;
+
+    th,
+    td {
+      // Apply darker border to cells
+      border: 1px solid darken($suse-grey-dark, 5%);
+      padding: 12px 15px;
+      text-align: left;
+      color: $suse-text-color !important;
+    }
+
+    // Row backgrounds for zebra striping
+    tr {
+      background-color: lighten(
+        $suse-dark-bg,
+        4%
+      ); // Base row: Slightly lighter than page background
+    }
+
+    // Alternating row background for contrast
+    tr:nth-child(even) {
+      background-color: lighten(
+        $suse-dark-bg,
+        10%
+      ); // Even row: Even lighter for high contrast
+    }
+
+    // Ensure header stands out
+    th {
+      background-color: darken(
+        $suse-dark-bg,
+        5%
+      ); // Darkest shade for the header
+      font-weight: bold;
+      color: $suse-text-color;
+    }
+
+    // Ensure links inside the table use the SUSE link color
+    td a {
+      color: $suse-link-color;
+      &:hover {
+        color: lighten($suse-link-color, 10%);
+      }
+    }
+  }
+  // ------------------------------------------
 }
 
 // 2. Style the Toggle Button (Keep this outside the dark-mode class for consistent styling)
