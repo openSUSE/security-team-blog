@@ -110,12 +110,12 @@ configuration format.
 
 Foomuuri contains optional support to daemonize itself. Normally this is done
 by systemd and the code in question is not invoked. It [contains
-logic][code:daemonize] to set the daemon's umask to 0, however, which is a bad
+logic][code:daemonize] to set the daemon's `umask` to 0, however, which is a bad
 default, since applications or libraries which intend to foster user control of
-the file mode of newly created files can pass modes like `0666` to `open(),
+the file mode of newly created files can pass modes like `0666` to `open()`,
 rendering them world-writable.
 
-Foomuuri does not contain any code paths that create new files, but the umask
+Foomuuri does not contain any code paths that create new files, but the `umask`
 setting is also inherited by child processes, for example. While we did not
 think this was a tangible security issue in this form, we suggested to choose a
 more conservative value here to prevent future issues.
@@ -148,7 +148,7 @@ service and otherwise followed closely our suggestions:
 - commit [d1961f4][commit:interface-verification] adds verification of the
   `interface` parameter to prevent manipulation of the JSON configuration
   data.
-- commit [806e11d][commit:umask] sets the umask used in the daemonize code
+- commit [806e11d][commit:umask] sets the `umask` used in the daemonize code
   to a more conservative `0o022` setting, preventing world- or group-writable
   files from coming into existence.
 - commit [5fcf125][commit:protect-system] adds the `ProtectSystem=full`
@@ -167,7 +167,7 @@ this report:
 - CVE-2025-67603: lack of client authorization allows arbitrary users to
   influence the firewall configuration ([issue 3.1][section:auth-issue]).
 
-- CVE-2025-67858: a crafted "interface" input parameter to D-Bus methods can
+- CVE-2025-67858: a crafted `interface` input parameter to D-Bus methods can
   lead to integrity loss of the firewall configuration or further unspecified
   impact by manipulating the JSON configuration passed to `nft`
   ([issue 3.2][section:input-verification]).
