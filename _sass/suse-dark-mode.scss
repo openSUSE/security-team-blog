@@ -40,6 +40,22 @@ body.dark-mode {
     background-color: darken($suse-dark-bg, 3%); // Slightly darker header
   }
 
+  // Override the site-nav background for mobile in dark mode
+  @include media-query($on-palm) {
+    .site-nav {
+      background-color: darken($suse-dark-bg, 3%) !important;
+      border-color: $suse-grey-dark !important;
+
+      .page-link,
+      #theme-toggle {
+        color: $suse-text-color !important;
+        &:hover {
+          color: rgba($suse-text-color, 0.8) !important;
+        }
+      }
+    }
+  }
+
   // Override nav item colors
   .site-nav .page-link {
     color: $suse-text-color;
@@ -124,6 +140,8 @@ body.dark-mode {
   cursor: pointer;
   border-radius: 4px;
   margin-left: 1em;
+  // This margin-right fixes issue#27
+  margin-right: 1em;
   transition: all 0.3s ease;
   font-weight: bold;
 

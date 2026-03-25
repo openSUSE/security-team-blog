@@ -10,6 +10,11 @@ $grey-color-light: #e8e8e8; // SUSE Light Grey for borders/dividers
 $grey-color-dark: #828282; // Mid-grey for secondary text (e.g., dates)
 $text-color: $base-font-color;
 
+$base-font-family: "Poppins Regular", Poppins, Arial, sans-serif;
+
+// Import partials from the `minima` theme.
+@import "minima";
+
 // --- SUSE BRAND LIGHT MODE TABLE FIX ---
 table {
   border-collapse: collapse;
@@ -62,6 +67,22 @@ table {
       0.8
     ) !important; // Slightly transparent white on hover
   }
+
+  // Mobile menu dropdown fix: override white text color for small screens
+  @include media-query($on-palm) {
+    .site-nav {
+      background-color: $background-color !important;
+      border: 1px solid $grey-color-light !important;
+
+      .page-link,
+      #theme-toggle {
+        color: $text-color !important;
+        &:hover {
+          color: rgba($text-color, 0.8) !important;
+        }
+      }
+    }
+  }
 }
 // ----------------------------------------
 
@@ -90,14 +111,9 @@ table {
   background-color: #0c322c;
 }
 
-$base-font-family: "Poppins Regular", Poppins, Arial, sans-serif;
-
 h1 {
   font-weight: bold !important;
 }
-
-// Import partials from the `minima` theme.
-@import "minima";
 
 // Import your custom dark mode styles from your _sass directory
 @import "suse-dark-mode";
@@ -115,8 +131,9 @@ h1 {
 // 	color: #efefef;
 // }
 
+// Commented out to fix issue#27
 // .site-nav .menu-icon > svg {
-// 	fill: #efefef;
+//   fill: #ffffff !important;
 // }
 
 // .site-nav {
