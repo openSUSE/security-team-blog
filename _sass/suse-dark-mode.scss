@@ -19,6 +19,10 @@ body.dark-mode {
     color: $suse-text-color;
   }
 
+  h1 {
+    border-bottom-color: $suse-grey-dark;
+  }
+
   // Override link colors
   a {
     color: $suse-link-color;
