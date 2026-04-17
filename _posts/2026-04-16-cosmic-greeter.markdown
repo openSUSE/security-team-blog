@@ -108,9 +108,9 @@ subject to a range of security issues:
   accounts][code:cosmic-user-id-selection]. On many Linux distributions
   this means that also the `nobody` user account is included (UID 65534). As a
   result, the daemon also attempts to process Cosmic configuration in
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; `/var/lib/nobody` on OpenSUSE. This grants processes operating
-  with `nobody` privileges the opportunity to attempt to exploit the daemon's
-  logic.
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; `/var/lib/nobody` on openSUSE.
+  This grants processes operating with `nobody` privileges the opportunity to
+  attempt to exploit the daemon's logic.
 
 The severity of these issues is reduced by the fact that only members of the
 `cosmic-greeter` group are allowed to invoke the `GetUserData` D-Bus method,
