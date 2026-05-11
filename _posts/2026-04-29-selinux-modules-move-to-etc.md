@@ -106,8 +106,9 @@ location was already used for other SELinux policy files, and is covered by the
 snapshot and rollback mechanism.
 
 The migration was tracked in [bsc#1221342][bug:tracker-migration]. After a long
-period of automated and manual testing over the past few months, the migration
-will be performed in an upcoming Tumbleweed snapshot.
+period of automated and manual testing over several months, the migration
+was performed in Tumbleweed snapshot
+[20260505][opensuse:migration-release-snapshot].
 
 Some of the challenges encountered during the implementation of the migration
 process were:
@@ -245,9 +246,15 @@ out over the [mailing list][opensuse:selinux-ml].
 - [openSUSE Bugreport SELinux][bugreport]
 - [openSUSE SELinux Mailing List][opensuse:selinux-ml]
 
+Change History
+==============
+
+|2026-05-11| [Section 3](#3-solution-migration-from-var-to-etc): mentioned the specific Tumbleweed snapshot which introduced the migration ([20260505][opensuse:migration-release-snapshot]) and adjusted phrasing.|
+
 [news:default]: https://news.opensuse.org/2025/02/13/tw-plans-to-adopt-selinux-as-default/
 [opensuse:atomic-update]: https://en.opensuse.org/openSUSE:Packaging_Requirements_for_Atomic_and_Image_Update
 [bug:tracker-migration]: https://bugzilla.opensuse.org/show_bug.cgi?id=1221342
 [bugreport]: https://en.opensuse.org/openSUSE:Bugreport_SELinux
 [opensuse:selinux-ml]: https://lists.opensuse.org/archives/list/selinux@lists.opensuse.org/
+[opensuse:migration-release-snapshot]: https://lists.opensuse.org/archives/list/factory@lists.opensuse.org/message/YCAAJRIHH7TECRELF43ZIDNUAEZTF7UM/
 
