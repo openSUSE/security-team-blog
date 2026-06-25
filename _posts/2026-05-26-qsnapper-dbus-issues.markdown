@@ -277,6 +277,7 @@ qSnapper implementation.
   could leak sensitive information. For hardening purposes it could be made
   private to `root`.
 
+{: #upstream-bugfixes}
 4) Upstream Bugfixes
 ====================
 
@@ -307,8 +308,8 @@ qSnapper contains the following bugfixes:
     [section 3.6][section:issue-other]).
 
 The more complex defense-in-depth issues outlined in [section
-3.5][section:issue-defense-in-depth] will be addressed by upstream in the open
-at a later time.
+3.5][section:issue-defense-in-depth] have been addressed in the open later on
+and are contained in [release v1.3.4][github:hardening-release].
 
 5) Disclosure Process
 =====================
@@ -349,6 +350,11 @@ qSnapper.
 - [qSnapper 1.3.3 bugfix release][github:bugfix-release]
 - [openSUSE review bug for qSnapper][bug:qsnapper]
 
+Change History
+==============
+
+|2026-06-26|Updated [section 4][section:upstream-bugfixes] with information about release v1.3.4 containing hardening bugfixes.|
+
 [bug:qsnapper]: https://bugzilla.suse.com/show_bug.cgi?id=1261537
 [code:check-authorization]: https://github.com/presire/qSnapper/blob/485a7ee9256c8e25de87a5d69d538e318e49b56d/src/dbusservice/snapshotoperations.cpp#L449
 [code:config-name]: https://github.com/presire/qSnapper/blob/485a7ee9256c8e25de87a5d69d538e318e49b56d/src/dbusservice/snapshotoperations.cpp#L470
@@ -365,6 +371,7 @@ qSnapper.
 [commit:auth-and-path-fixes]: https://github.com/presire/qSnapper/commit/a6caf538fca1e678b81b1c85500c3d071a5edc6d
 [commit:split-actions-and-hardening]: https://github.com/presire/qSnapper/commit/f375b74c34e0d07c0edc48f62c02846ad3c9f3ec
 [github:bugfix-release]: https://github.com/presire/qSnapper/releases/tag/v1.3.3
+[github:hardening-release]: https://github.com/presire/qSnapper/releases/tag/v1.3.4
 [github:issue]: https://github.com/presire/qSnapper/issues/5
 [github:qsnapper]: https://github.com/presire/qSnapper.git
 [github:report-tag]: https://github.com/presire/qSnapper/releases/tag/v1.3.2
@@ -376,5 +383,6 @@ qSnapper.
 [section:issue-other]: #issue-other
 [section:issue-path-traversal]: #issue-path-traversal
 [section:issue-polkit-bypass]: #issue-polkit-bypass
+[section:upstream-bugfixes]: #upstream-bugfixes
 [snapper:config-man-page]: http://snapper.io/manpages/snapper-configs.html
 [snapper:overview]: http://snapper.io/overview.html
