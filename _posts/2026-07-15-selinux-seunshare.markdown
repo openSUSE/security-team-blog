@@ -3,7 +3,7 @@ layout: post
 author: <a href='mailto:matthias.gerstner@suse.de'>Matthias Gerstner</a>, <a href='mailto:filippo.bonazzi@suse.com'>Filippo Bonazzi (editor)</a>
 title:  "SELinux Userspace Utilities: Local Denial-of-Service Attack Vectors in seunshare in release 3.10"
 date:   2026-07-15
-tags:   setuid
+tags:   setuid CVE
 excerpt: "seunshare is a setuid-root utility used for sandboxing untrusted
 applications based on Linux namespaces and SELinux policies. During a code
 review we identified two local Denial-of-Service attack vectors in version
@@ -92,8 +92,9 @@ the context of attacks carried out by interactive users, the impact of the
 vulnerabilities below will be a root-like privilege escalation despite the
 system running in SELinux enforced mode.
 
-3.1) Local File Deletion Attack Vector in `rm_rf()`
----------------------------------------------------
+{: #section-issue-rmrf}
+3.1) Local File Deletion Attack Vector in `rm_rf()` (CVE-2026-59676)
+--------------------------------------------------------------------
 
 The function [`rm_rf()`][code:rmrf] is called at the end of the utility's
 execution to recursively remove temporary directory trees. While a comment in
@@ -129,8 +130,9 @@ call in question).
 Upstream fixed this issue in commit [38f0a4d9a][commit:rmrf-bugfix] which is
 part of of the 3.11 upstream release.
 
-3.2) Process Kill Attack Vector in `killall()`
-----------------------------------------------
+{: #section-issue-killall}
+3.2) Process Kill Attack Vector in `killall()` (CVE-2026-59677)
+---------------------------------------------------------------
 
 `seunshare` offers `--kill` and `-Z` switches as documented in its man page:
 
@@ -200,14 +202,18 @@ binaries. Still a number of concerns remain:
     receive world-readable or world-writable bits leading to unexpected attack
     vectors.
 
+{: #section-cve-assignments}
 5) CVE Assignments
 ==================
 
 We approached the upstream SELinux userspace utilities developers and
 suggested to assign CVEs for the two issues discussed above. Upstream informed
 us that they don't take care of CVE assignment themselves, however. Since Red
-Hat developers are also involved with upstream development, we are currently
-waiting for an agreement on who will assign CVEs to avoid duplicates.
+Hat developers are also involved with upstream development, we were waiting
+for an agreement on who will assign CVEs to avoid duplicates. On 2026-07-17,
+after the initial publication of this report, we received a response that
+there is no intention by RedHat developers to assign CVEs. As a result we
+assigned CVEs on our end as documented in the updated blog post.
 
 6) Timeline
 ===========
@@ -217,6 +223,7 @@ waiting for an agreement on who will assign CVEs to avoid duplicates.
 |2026-07-06|An SELinux userspace developer informed us that the project is not actively assigning CVEs.|
 |2026-07-07|We responded that we would be able to assign CVEs on our end, but would like to avoid a clash with any CVE assignment plans on the end of Red Hat developers working on SELinux. We thus asked for clarification of who will take care of it.|
 |2026-07-15|Publication of this report.|
+|2026-07-17|We received a reply from a RedHat upstream developer stating that there is no intention to assign CVEs on their end. Thus we assigned CVE-2026-59676 for [issue 3.1][section:issue-rmrf] and CVE-2026-59677 for [issue 3.2][section:issue-killall] and published the information.|
 
 7) References
 =============
@@ -225,6 +232,12 @@ waiting for an agreement on who will assign CVEs to avoid duplicates.
 - [SELinux userspace utilities Github project][github]
 - [vulnerable seunshare code in upstream release 3.10][code:seunshare]
 - [Reproducer for the file delete issue][download:reproducer]
+
+8) Change History
+=================
+
+|2026-07-17|Added information about the [CVEs][section:cve-assignments] we assigned for the issues.|
+
 
 [bug:seunshare]: https://bugzilla.suse.com/show_bug.cgi?id=1268256
 [code:seunshare]: https://github.com/SELinuxProject/selinux/blob/3.10/sandbox/seunshare.c
@@ -241,3 +254,6 @@ waiting for an agreement on who will assign CVEs to avoid duplicates.
 [man:setfsuid]: https://man7.org/linux/man-pages/man2/setfsuid.2.html
 [man:seunshare]: https://man7.org/linux/man-pages/man8/seunshare.8.html
 [download:reproducer]: /download/seunshare-reproducer.tar.gz
+[section:cve-assignments]: #section-cve-assignments
+[section:issue-rmrf]: #section-issue-rmrf
+[section:issue-killall]: #section-issue-killall
