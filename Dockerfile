@@ -1,10 +1,15 @@
 FROM registry.opensuse.org/opensuse/leap:16.0
 
-RUN zypper ref
-RUN zypper install -y \
+RUN zypper --non-interactive refresh
+RUN zypper --non-interactive install --no-recommends \
 	ruby \
-	ruby-devel
-RUN zypper install -y -t pattern devel_C_C++
+	ruby-devel \
+	gcc \
+	gcc-c++ \
+	make \
+	tar && \
+	zypper clean -a && \
+	rm -rf /var/cache/zypp/* /tmp/*
 
 WORKDIR /work
 
