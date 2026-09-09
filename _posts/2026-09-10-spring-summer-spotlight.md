@@ -1,14 +1,15 @@
 ---
 layout: post
-author: <a href='mailto:matthias.gerstner@suse.de'>Matthias Gerstner</a>, <a href='mailto:filippo.bonazzi@suse.com'>Filippo Bonazzi (editor)</a>
+author: <a href='mailto:matthias.gerstner@suse.de'>Matthias Gerstner</a>, <a href='mailto:wolfgang.frisch@suse.com'>Wolfgang Frisch</a>, <a href='mailto:filippo.bonazzi@suse.com'>Filippo Bonazzi (editor)</a>
 title:  "SUSE Security Team Spotlight Spring/Summer 2026"
 date:   2026-09-10
 tags:   spotlight
 excerpt: "This is a combined spring/summer edition of our spotlight series. This
 time we will discuss various changes in D-Bus and Polkit features, a number of
 Linux capability assignments, a revisit of the Apptainer starter-suid binary,
-newly introduced Varlink packaging restrictions and a review of the
-pam_ssh_agent PAM module."
+newly introduced Varlink packaging restrictions, a review of the
+pam_ssh_agent PAM module and a command injection issue we found in the wicked
+network configuration framework."
 ---
 
 Table of Contents
@@ -52,7 +53,10 @@ restrictions in SUSE distributions regarding the packaging of Varlink
 services. In [section 6)][section:pam-ssh-agent] we will examine the
 pam-ssh-agent module which was recently packaged for openSUSE. In [section
 7)][section:wireguard] we will discuss concerns about a script in `wg-quick`
-for setting up DNS for Wireguard VPN interfaces.
+for setting up DNS for Wireguard VPN interfaces. Finally, in [section
+8)][section:wicked] we will look at a shell command injection issue we found
+in the `wicked` network configuration framework, which can lead to remote root
+code execution in combination with `dracut`.
 
 {: #section-dbus-polkit}
 2) D-Bus and Polkit Additions
@@ -477,7 +481,71 @@ configuration reinstated.
 We have no security concerns about this logic, and explained the situation to
 the creator of the review bug accordingly.
 
-8) Conclusion
+{: #section-wicked}
+8) wicked: Command Injection via DHCP Options (CVE-2026-44932)
+==============================================================
+
+`wicked` is the network configuration framework used in SUSE Linux Enterprise
+15-SP7 and earlier. Its DHCP clients dump the settings of an acquired lease
+into files below `/run/wicked/leaseinfo.*`, which contain lines of the form
+`KEY='value'`.
+
+We found that the values of a number of DHCP options, among them
+`POSIXTZSTRING`, were [written out verbatim][code:wicked-leaseinfo], enclosed
+in single quotes but without any validation or escaping:
+
+```c
+fprintf(out, "%s='%s'\n", __ni_keyword_format
+        (&key, prefix, name, index),
+        val_to_print);
+```
+
+A DHCP server can thus place a single quote in an option value and break out
+of the quoting. A `dnsmasq` configured with
+
+```
+dhcp-option=100,'; chmod a+w /etc/shadow; /bin/true '
+```
+
+results in the following line in the leaseinfo file:
+
+```
+POSIXTZSTRING='Hello_World'; chmod a+w /etc/shadow; /bin/true ''
+```
+
+The interesting part about this issue is *who* actually executes this. `wicked`
+itself never sources these files; it only passes them on to `netconfig modify`,
+which rejects any line whose value is not strictly single-quoted. There was,
+however, also no documentation stating how the leaseinfo files were intended
+to be consumed. Since their syntax looks exactly like shell variable
+assignments, third party code simply started to source them from shell
+scripts. We found several examples of this in our distributions and in the
+wild, among them [`dracut`'s `network-legacy` module][code:dracut-ifup], the
+SUSE [cloud-netconfig][code:cloud-netconfig] scripts and
+[SystemImager][code:systemimager].
+
+The `dracut` case is the nastiest one: `ifup.sh` sources the leaseinfo file as
+`root` in the initrd, turning the issue into unauthenticated code execution as
+`root` for an attacker on the local or adjacent network. The `network-legacy`
+module is not active by default, but it is pulled in by plausible setups such
+as remote unlocking via `dracut-sshd`, or systems that need NFS, iSCSI or NBD
+during early boot. We confirmed this end-to-end on SLE-15-SP7.
+
+We rated the issue `CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H` (8.8 High)
+and `CVSS:4.0/AV:A/AC:L/AT:P/PR:N/UI:N/VC:N/VI:L/VA:N/SC:H/SI:H/SA:H` (5.8
+Medium). This is a nice example of the improved precision of CVSS v4.0, which
+is able to express that the impact materializes in a *subsequent* system
+rather than in `wicked` itself.
+
+The issue was [handled under embargo][bug:wicked] and fixed by `wicked`
+upstream: single quotes are now rejected in all string options and discarded
+values are logged as warnings; should a suspect string still pass the input
+check, single quotes are additionally escaped in the leaseinfo output. The
+[fix][upstream:wicked-fix] was released for all maintained SLE and openSUSE
+codestreams, including a rebuild of the initrd, which carries its own copy of
+`wicked`.
+
+9) Conclusion
 ==============
 
 As can be seen from this edition of the spotlight series, maintaining the
@@ -528,6 +596,7 @@ that you can trust.
 [bug:cacti-spine]: https://bugzilla.suse.com/show_bug.cgi?id=1273300
 [bug:ksystemstats6]: https://bugzilla.suse.com/show_bug.cgi?id=1262779
 [bug:grd-pcscd]: https://bugzilla.suse.com/show_bug.cgi?id=1276523
+[bug:wicked]: https://bugzilla.suse.com/show_bug.cgi?id=1265221
 
 [section:dbus-polkit]: #section-dbus-polkit
 [section:caps]: #section-caps
@@ -535,8 +604,13 @@ that you can trust.
 [section:varlink]: #section-varlink
 [section:pam-ssh-agent]: #section-pam-ssh-agent
 [section:wireguard]: #section-wireguard
+[section:wicked]: #section-wicked
 
 [code:upower-rules]: https://gitlab.freedesktop.org/upower/upower/-/blob/v1.91.3/policy/org.freedesktop.upower.rules?ref_type=tags
+[code:wicked-leaseinfo]: https://github.com/openSUSE/wicked/blob/62d6df455f43b9b099cbe786837adb46c0c50ca0/src/leaseinfo.c#L781
+[code:dracut-ifup]: https://github.com/dracut-ng/dracut/blob/a81148a387dd868462599746dc106d42ab8e1a89/modules.d/35network-legacy/ifup.sh#L35
+[code:cloud-netconfig]: https://github.com/SUSE-Enceladus/cloud-netconfig/blob/d51265e0c46b2c413af1001020b26fd293685239/common/cloud-netconfig#L395
+[code:systemimager]: https://github.com/finley/SystemImager/blob/1e83cf9ad9dec2fa623b1dd54cc9a77ab8053a0f/lib/dracut/modules.d/51systemimager/systemimager-load-network-infos.sh#L197
 
 [oss-sec:singularity-1]: https://www.openwall.com/lists/oss-security/2018/12/12/2
 [oss-sec:singularity-2]: https://www.openwall.com/lists/oss-security/2019/05/16/1
@@ -545,3 +619,4 @@ that you can trust.
 [upstream:ksystemstats6-pr]: https://invent.kde.org/plasma/ksystemstats/-/merge_requests/141
 [upstream:pam-ssh-agent-warning]: https://github.com/nresare/pam-ssh-agent/blob/f73c8609a45fec60c7fd9f02bd41bfd1bd1d835d/README.md?plain=1#L123
 [upstream:grd-pcscd-race]: https://gitlab.gnome.org/GNOME/gnome-remote-desktop/-/work_items/360
+[upstream:wicked-fix]: https://github.com/openSUSE/wicked/pull/1071
